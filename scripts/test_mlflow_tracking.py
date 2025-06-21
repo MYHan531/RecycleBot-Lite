@@ -44,7 +44,7 @@ def test_question(question: str, question_num: int):
         if response.status_code == 200:
             result = response.json()
             
-            print(f"✅ Success!")
+            print(f"[OK] Success!")
             print(f"   Answer: {result['answer'][:100]}...")
             print(f"   Sources: {len(result['sources'])} documents")
             print(f"   Latency: {result['latency_ms']:.2f} ms")
@@ -63,7 +63,7 @@ def test_question(question: str, question_num: int):
                 "request_id": result['request_id']
             }
         else:
-            print(f"❌ Error: {response.status_code} - {response.text}")
+            print(f"[ERROR] Error: {response.status_code} - {response.text}")
             return {
                 "question_num": question_num,
                 "question": question,
@@ -72,7 +72,7 @@ def test_question(question: str, question_num: int):
             }
             
     except Exception as e:
-        print(f"❌ Exception: {e}")
+        print(f"[ERROR] Exception: {e}")
         return {
             "question_num": question_num,
             "question": question,
@@ -82,7 +82,7 @@ def test_question(question: str, question_num: int):
 
 def main():
     """Run all test questions and collect metrics"""
-    print("🚀 Starting MLflow Tracking Test")
+    print("[STEP] Starting MLflow Tracking Test")
     print(f"📅 Test started at: {datetime.now().isoformat()}")
     print(f"🎯 Testing {len(TEST_QUESTIONS)} questions")
     
@@ -90,12 +90,12 @@ def main():
     try:
         health_response = requests.get(f"{API_BASE_URL}/health")
         if health_response.status_code != 200:
-            print("❌ FastAPI server is not running. Please start it first:")
+            print("[ERROR] FastAPI server is not running. Please start it first:")
             print("   python fastapi_rag.py")
             return
-        print("✅ FastAPI server is running")
+        print("[OK] FastAPI server is running")
     except Exception as e:
-        print("❌ Cannot connect to FastAPI server. Please start it first:")
+        print("[ERROR] Cannot connect to FastAPI server. Please start it first:")
         print("   python fastapi_rag.py")
         return
     
@@ -115,7 +115,7 @@ def main():
         avg_retrieval = sum(r['retrieval_score'] for r in successful_results) / len(successful_results)
         avg_sources = sum(r['sources_count'] for r in successful_results) / len(successful_results)
         
-        print(f"\n📊 Test Summary:")
+        print(f"\n[INFO] Test Summary:")
         print(f"   Total Questions: {len(results)}")
         print(f"   Successful: {len(successful_results)}")
         print(f"   Failed: {len(results) - len(successful_results)}")
@@ -142,16 +142,16 @@ def main():
         with open("mlflow_test_results.json", "w", encoding="utf-8") as f:
             json.dump(test_results, f, indent=2, ensure_ascii=False)
         
-        print(f"\n💾 Results saved to: mlflow_test_results.json")
+        print(f"\n[OK] Results saved to: mlflow_test_results.json")
         
     else:
-        print("❌ No successful tests to summarize")
+        print("[ERROR] No successful tests to summarize")
     
     print(f"\n🔍 Check MLflow UI for detailed tracking:")
     print(f"   mlflow ui")
     print(f"   Then visit: http://localhost:5000")
     
-    print(f"\n📈 Check CRM logs:")
+    print(f"\n[INFO] Check CRM logs:")
     print(f"   cat cases.json")
 
 if __name__ == "__main__":
