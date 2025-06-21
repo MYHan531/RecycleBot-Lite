@@ -228,4 +228,116 @@ FINAL DELIVERABLES:
 2. RAG knowledge base in data/knowledge_base/ (Markdown snippets)
 3. Service blueprint in docs/ (Markdown + PDF/HTML)
 4. Complete documentation and scripts
-5. Thinking process log for future reference 
+5. Thinking process log for future reference
+
+=== MLOps Integration Sprint (≈4 hours) ===
+Date: 2025-01-21
+
+IMPLEMENTATION DECISIONS:
+
+1. FastAPI Integration:
+   - Created fastapi_rag.py with complete FastAPI application
+   - Integrated existing RAG system (NEARAGSystem) with FastAPI
+   - Added Pydantic models for request/response validation
+   - Implemented CORS middleware for cross-origin requests
+   - Added health check and metrics endpoints
+
+2. CRM Logging:
+   - Implemented log_to_crm() function that writes to cases.json
+   - Each chat interaction logged with:
+     - Request ID (UUID)
+     - Session ID
+     - User ID
+     - Question and answer
+     - Performance metrics
+     - Timestamp
+     - Metadata
+
+3. MLflow Tracking:
+   - Set up MLflow with SQLite backend (mlflow.db)
+   - Created track_metrics_with_mlflow() function
+   - Tracking metrics:
+     - Latency (ms)
+     - Token count (estimated)
+     - Retrieval score (based on number of sources)
+     - Question length
+     - User and session IDs
+   - Each chat interaction creates a nested MLflow run
+   - Artifacts saved as JSON files
+
+4. Test Questions Implementation:
+   - Created test_mlflow_tracking.py with 5 predefined questions:
+     1. "What is the total waste generated in Singapore in 2023?"
+     2. "How much of the waste was recycled in 2023?"
+     3. "What are the key highlights of waste management in Singapore?"
+     4. "What is the recycling rate for different waste streams?"
+     5. "How has waste generation changed over the years?"
+   - Automated testing with metrics collection
+   - Results saved to mlflow_test_results.json
+
+5. DVC Data Versioning:
+   - Created setup_dvc.py for DVC initialization
+   - Added data/raw directory to DVC tracking
+   - Updated .gitignore to exclude .dvc/cache
+   - Committed DVC setup to git
+
+6. Complete MLOps Setup:
+   - Created setup_mlops.py for one-command setup
+   - Checks all dependencies
+   - Sets up DVC, MLflow, and creates necessary directories
+   - Creates startup scripts for easy deployment
+   - Provides comprehensive instructions
+
+7. Dependencies Added:
+   - fastapi>=0.104.0
+   - uvicorn>=0.24.0
+   - pydantic>=2.5.0
+   - mlflow>=2.8.0
+   - dvc>=3.30.0
+   - python-multipart>=0.0.6
+
+8. File Structure:
+   - fastapi_rag.py: Main FastAPI application
+   - test_mlflow_tracking.py: Test script for MLflow tracking
+   - setup_dvc.py: DVC setup script
+   - setup_mlops.py: Complete MLOps setup
+   - start_fastapi.sh: FastAPI startup script
+   - start_mlflow.sh: MLflow UI startup script
+   - run_tests.sh: Test execution script
+
+9. API Endpoints:
+   - POST /chat: Main chat endpoint with CRM logging and MLflow tracking
+   - GET /health: Health check endpoint
+   - GET /metrics: System metrics endpoint
+   - GET /test-questions: Get predefined test questions
+
+10. Data Lineage:
+    - Raw data versioned with DVC (.dvc/cache)
+    - Experiments tracked with MLflow (mlflow.db)
+    - Chat interactions logged to CRM (cases.json)
+    - Test results saved (mlflow_test_results.json)
+
+11. Metrics Tracked:
+    - Latency (response time in milliseconds)
+    - Token count (estimated from question + answer length)
+    - Retrieval score (normalized score based on number of sources)
+    - Number of sources retrieved
+    - User session tracking
+    - Request IDs for traceability
+
+12. Deployment Instructions:
+    - Start FastAPI: python fastapi_rag.py
+    - Start MLflow UI: mlflow ui
+    - Run tests: python test_mlflow_tracking.py
+    - View API docs: http://localhost:8000/docs
+    - View MLflow UI: http://localhost:5000
+
+This implementation provides a complete MLOps pipeline with:
+- FastAPI for API serving
+- MLflow for experiment tracking
+- DVC for data versioning
+- CRM-like logging for chat interactions
+- Automated testing with metrics collection
+- Data lineage and traceability
+
+The system is now ready for production deployment with full observability and data versioning capabilities. 

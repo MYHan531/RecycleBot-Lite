@@ -54,10 +54,10 @@ pip install -r requirements.txt
 
 ```bash
 # First, scrape the data (if not already done)
-python scrape.py
+python scripts/scrape.py
 
 # Then generate the RAG knowledge base
-python generate_rag_kb.py
+python scripts/generate_rag_kb.py
 ```
 
 ## 🚀 Quick Start
@@ -65,7 +65,7 @@ python generate_rag_kb.py
 ### Option 1: Automated Setup
 
 ```bash
-python setup_ollama.py
+python scripts/setup_ollama.py
 ```
 
 This script will:
@@ -188,7 +188,7 @@ retriever=self.vector_store.as_retriever(
 
 4. **"Knowledge base not found"**
    ```bash
-   python generate_rag_kb.py
+   python scripts/generate_rag_kb.py
    ```
 
 ### Performance Tips
@@ -203,12 +203,12 @@ To update with new data:
 
 1. **Re-scrape data:**
    ```bash
-   python scrape.py
+   python scripts/scrape.py
    ```
 
 2. **Regenerate knowledge base:**
    ```bash
-   python generate_rag_kb.py
+   python scripts/generate_rag_kb.py
    ```
 
 3. **Restart RAG system:**

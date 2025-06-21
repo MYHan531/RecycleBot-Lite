@@ -27,7 +27,7 @@ pip install -r requirements.txt
 Run the scraper with:
 
 ```bash
-python scrape.py
+python scripts/scrape.py
 ```
 
 The scraper will:
