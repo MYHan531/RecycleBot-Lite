@@ -6,9 +6,14 @@ FastAPI RAG System with MLflow Tracking and CRM Integration
 import json
 import time
 import uuid
+import sys
+import os
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 import logging
+
+# Add parent directory to path to import rag_system
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
