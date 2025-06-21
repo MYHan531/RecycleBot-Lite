@@ -25,28 +25,137 @@ MANIFEST
 venv/
 env/
 ENV/
+.venv/
+.env/
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log
+logs/
+*.log.*
 
 # Temporary files
 *.tmp
 *.temp
+*.bak
+*.backup
 
-# Data files (uncomment if you don't want to commit data)
-# data/raw/*.json
-# data/knowledge_base/
+# Large data files and ML artifacts
+data/raw/*.json
+data/vector_store/
+*.faiss
+*.pkl
+*.h5
+*.hdf5
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# MLflow artifacts
+mlflow.db
+mlflow.db-journal
+mlruns/
+mlflow_runs/
+*.mlflow
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+.dvc/state
+.dvc/state-journal
+*.dvc/cache
+
+# CRM and tracking logs
+cases.json
+mlflow_test_results.json
+test_results/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# pytest
+.pytest_cache/
+.tox/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Large model files
+*.bin
+*.gguf
+*.ggml
+models/
+checkpoints/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Large text files
+*.csv
+*.tsv
+*.jsonl
+*.json.gz
 
 # Keep the directory structure but ignore content
 data/raw/.gitkeep
 data/knowledge_base/.gitkeep
+data/vector_store/.gitkeep
+logs/.gitkeep
+mlflow_runs/.gitkeep
+test_results/.gitkeep
+
+# Windows batch files (optional - uncomment if you don't want them)
+# *.bat
+
+# Shell scripts (optional - uncomment if you don't want them)
+# *.sh
